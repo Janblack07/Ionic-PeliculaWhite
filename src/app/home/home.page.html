@@ -1,0 +1,136 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-app>
+      <ion-menu contentId="main-content">
+        <ion-header>
+
+        </ion-header>
+
+      </ion-menu>
+      <div class="ion-page" id="main-content">
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-menu-button color="primary"></ion-menu-button>
+            </ion-buttons>
+            <ion-buttons style="margin-left: 20%;">
+              <ion-icon name="film-outline" size="large" color="primary"></ion-icon>
+              <ion-title color="primary" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">PelisWhite</ion-title>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
+      </div>
+    </ion-app>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div>
+<ion-searchbar #dato (ionChange)="Search(dato)"   style="color:rgba(43, 125, 247, 0.466);" placeholder="Buscar" ></ion-searchbar>
+  </div>
+
+  <div id="carouselExampleCaptions" class="carousel slide p-3 ">
+    <div class="carousel-inner my-2 h-50 w-100"  >
+      <div class="carousel-item active" >
+        <ion-img src="https://image.tmdb.org/t/p/original/gNPqcv1tAifbN7PRNgqpzY8sEJZ.jpg"  class="" alt="Rapido y Furiosos" />
+      </div>
+      <div class="carousel-item" *ngFor="let p of movies">
+        <img src="https://image.tmdb.org/t/p/original{{p.poster_path}}"  class="d-block w-full h-50 " style="object-fit: cover;" alt="Rapido y Furiosos">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button> 
+  </div>
+<div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" *ngFor="let genero of genero">
+        <ion-avatar class="avatar-categoria" style="margin-left: 10%;">
+
+        </ion-avatar>
+        <p class="nombre-avatar my-2" style="margin-left: 10%;">{{genero.name}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+<div>
+
+  <ion-grid>
+    <ion-row *ngIf="!query">
+      <ion-col  *ngFor="let p of movies"  size="6" >
+
+        <ion-card expand="block" (click)="setOpen(true)" (click)="getDetalle(p.id)" >
+          <img alt="Silhouette of mountains" src="https://image.tmdb.org/t/p/original{{p.poster_path}}" />
+          <h2>{{p.original_title}}</h2>
+        </ion-card>
+      <ion-modal [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false)">Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-card >
+            <ion-img alt="Silhouette of mountains" src="https://image.tmdb.org/t/p/original{{detalle.poster_path}}" />
+            <h2>{{detalle.original_title}}</h2>
+            <ion-card-content>
+             {{detalle.overview}}
+            </ion-card-content>
+          </ion-card>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </ion-col>
+
+    </ion-row>
+
+    <ion-row *ngIf="query">
+      <ion-col  *ngFor="let p of query"  size="6" >
+
+        <ion-card expand="block" (click)="setOpen(true)" (click)="getDetalle(p.id)" >
+          <img alt="Silhouette of mountains" src="https://image.tmdb.org/t/p/original{{p.poster_path}}" />
+          <h2>{{p.original_title}}</h2>
+        </ion-card>
+      <ion-modal [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modal</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false)">Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-card >
+            <ion-img alt="Silhouette of mountains" src="https://image.tmdb.org/t/p/original{{detalle.poster_path}}" />
+            <h2>{{detalle.original_title}}</h2>
+            <ion-card-content>
+             {{detalle.overview}}
+            </ion-card-content>
+          </ion-card>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</div>
+</ion-content>
